@@ -1,0 +1,15 @@
+Vagrant.configure("2") do |config|
+  config.vm.define "apacheds" do |apacheds|
+    apacheds.vm.box_download_insecure = true
+    apacheds.vm.box = "hashicorp/bionic64"
+    apacheds.vm.network "private_network", ip: "100.0.0.18"
+    apacheds.vm.synced_folder "./vagrant", "/home/vagrant", disabled: false
+	apacheds.vm.provision "shell", path: "test.sh"
+    apacheds.vm.hostname = "apacheds"
+    apacheds.vm.provider "virtualbox" do |v|
+      v.name = "apacheds"
+      v.memory = 2048
+      v.cpus = 1
+    end
+  end
+end
